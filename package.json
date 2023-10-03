@@ -1,0 +1,23 @@
+{
+  "name": "to-do-odin",
+  "version": "0.5.0",
+  "description": "A simple todo list in which there will be: ability to create delete and edit a todo, the ability to create projects with certain todos, calendar where you can add todo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/l-e-q/to-do-odin.git"
+  },
+  "author": "l-e-q",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/l-e-q/to-do-odin/issues"
+  },
+  "homepage": "https://github.com/l-e-q/to-do-odin#readme",
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
