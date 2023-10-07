@@ -17,14 +17,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/i,
+                test: /\.css$/,
                 use: [
-                    {
-                        loader: "style-loader", options: {
-                            name: 'styles/[name].[ext]',
-                        } },
-                    "css-loader",
-                ],
+                    'style-loader',
+                    'css-loader'
+                ]
             },
             {
 
@@ -32,21 +29,18 @@ module.exports = {
                 use: [{
                     loader: 'file-loader',
                     options: {
-                        name: 'img/[name].[ext]',
+                        name: './img/[name].[ext]',
                     },
                 }],
                 type: 'asset/resource',
 
             },
             {
+
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: 'fonts/[name].[ext]',
-                    },
-                }],
+
                 type: 'asset/resource',
+
             },
         ],
     },

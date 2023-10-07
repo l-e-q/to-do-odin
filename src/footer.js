@@ -1,5 +1,4 @@
 import { createHtmlElement } from "./index";
-import Icon from './img/github-mark.svg';
 
 function render() {
     const footer = createHtmlElement('footer', 'footer', [], '');
@@ -14,7 +13,7 @@ function render() {
     footer.appendChild(footerImgLink);
 
     const footerImg = createHtmlElement('img', 'footer-img', [], '');
-    footerImg.src = Icon;
+    footerImg.src = './img/github-mark.svg';
     footerImgLink.appendChild(footerImg);
 
 }

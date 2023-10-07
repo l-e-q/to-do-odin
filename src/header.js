@@ -1,5 +1,6 @@
 import { createHtmlElement } from "./index";
 
+
 function render() {
     const header = createHtmlElement('header', 'header', [], '');
     document.body.appendChild(header);

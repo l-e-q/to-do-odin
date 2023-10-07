@@ -1,5 +1,7 @@
 import { renderHeader } from "./header";
 import { renderFooter } from "./footer";
+import "./styles/style.css";
+import "./img/github-mark.svg"
 
 function createHtmlElement(tag, id, arrayClasses, content) {
     const element = document.createElement(tag);
