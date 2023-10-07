@@ -1,4 +1,5 @@
 import { createHtmlElement } from "./index";
+import { renderLeftMenu } from "./leftMenu";
 
 
 function render() {
@@ -12,6 +13,13 @@ function render() {
     leftHeader.appendChild(listMenuElement);
 
     const headerMenuButton = createHtmlElement('button', 'header-menu-button', ['header-button'], 'Menu')
+    headerMenuButton.addEventListener('click', () => {
+        if (document.querySelector('#left-menu')) {
+            document.querySelector('#left-menu').remove();
+        } else {
+            renderLeftMenu();
+        }
+    })
     listMenuElement.appendChild(headerMenuButton);
 
     const listHomeElement = createHtmlElement('li', 'left-header-list-home', ['left-header-list-item'], '');
