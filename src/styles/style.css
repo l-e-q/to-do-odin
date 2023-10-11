@@ -12,3 +12,42 @@ body {
     font-family: inherit;
     font-size: inherit;
 }
+
+#header,
+#left-header,
+#right-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#left-menu {
+    background-color: gainsboro;
+}
+
+.main {
+    display: flex;
+    height: 100%;
+}
+
+#content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer-img {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.display-no {
+    display: none;
+}

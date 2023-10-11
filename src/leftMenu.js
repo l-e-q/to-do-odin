@@ -1,7 +1,7 @@
 import { createHtmlElement } from "./index";
 
 function render() {
-    const leftMenu = createHtmlElement('div', 'left-menu', [], '');
+    const leftMenu = createHtmlElement('div', 'left-menu', ['display-no'], '');
     document.querySelector('.main').appendChild(leftMenu);
 
     const tagsList = createHtmlElement('ul', 'tags-list', [], '');
