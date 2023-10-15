@@ -18,7 +18,9 @@ class Project {
     }
 
     removeSelf() {
-        projects.splice(projects.indexOf(this), 1)
+        if (projects.length > 1) {
+            projects.splice(projects.indexOf(this), 1)
+        }
     }
 
     changeName(name) {
@@ -136,6 +138,14 @@ function displayProjects() {
         projectColor.style.backgroundColor = project.color;
         projectCard.appendChild(projectColor);
 
+        const deleteProjectButton = createHtmlElement('button', '', ['delete-project-button'], 'X');
+        deleteProjectButton.addEventListener('click', () => {
+            project.removeSelf();
+            displayProjects();
+            renderOptions();
+        })
+        projectCard.appendChild(deleteProjectButton);
+
         const todosContainer = createHtmlElement('div', 'todos-container', [], '');
         projectCard.appendChild(todosContainer);
 
@@ -151,6 +161,13 @@ function displayProjects() {
 
             const todoDaysToComplete = createHtmlElement('div', '', ['todo-days-to-complete'], todo.toCompleteDays);
             todoCard.appendChild(todoDaysToComplete);
+
+            const deleteTodoButton = createHtmlElement('button', '', ['delete-todo-button'], 'X');
+            deleteTodoButton.addEventListener('click', () => {
+                todo.removeSelf();
+                displayProjects();
+            })
+            todoCard.appendChild(deleteTodoButton);
         })
     })
 }
