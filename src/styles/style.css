@@ -1,11 +1,6 @@
 body {
-    background-color: whitesmoke;
     font-size: 16px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 98.3vh;
 }
 
 * {
@@ -13,7 +8,23 @@ body {
     font-size: inherit;
 }
 
-#header,
+.project-color {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.project-card,
+.todo-card {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: max-content;
+}
+
+/* #header,
 #left-header,
 #right-header {
     display: flex;
@@ -50,4 +61,4 @@ body {
 
 .display-no {
     display: none;
-}
+} */

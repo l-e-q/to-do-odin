@@ -1,97 +1,71 @@
-import { renderHeader } from "./header";
-import { renderMain } from "./main";
-import { renderFooter } from "./footer";
+// import { renderHeader } from "./header";
+// import { renderMain } from "./main";
+// import { renderFooter } from "./footer";
 import "./styles/reset.css";
 import "./styles/style.css";
 import "./img/github-mark.svg"
 
-const projects = [
-    {
-        "name": "Inbox",
-        "color": "green",
-        "todoList": [
-            {
-                "name": "game",
-                "description": "adasdadadas",
-                "date": {
-                    "year": 2023,
-                    "month": 9,
-                    "date": 8,
-                    "day": 0
-                }
-            },
-            {
-                "name": "work",
-                "description": "adasagagagsdadadas",
-                "date": {
-                    "year": 2023,
-                    "month": 9,
-                    "date": 8,
-                    "day": 0
-                }
-            },
-            {
-                "name": "task",
-                "description": "asdad",
-                "date": {
-                    "year": 2023,
-                    "month": 9,
-                    "date": 8,
-                    "day": 0
-                }
-            }
-        ]
-    },
-    {
-        "name": "Home",
-        "color": "blue",
-        "todoList": []
-    },
-    {
-        "name": "Today",
-        "color": "red",
-        "todoList": []
-    }
-];
+const projects = [];
 
 class Project {
-    constructor(name, color) {
+    constructor(name, caption, color) {
         this.name = name;
-        this.color = color ? color : 'gray';
-        this.todoList = [];
+        this.caption = caption;
+        this.color = color;
+        this.todos = [];
+
         projects.push(this);
     }
 
     removeSelf() {
         projects.splice(projects.indexOf(this), 1)
     }
+
+    changeName(name) {
+        this.name = name;
+    }
+
+    changeCaption(caption) {
+        this.caption = caption;
+    }
+
+    changeColor(color) {
+        this.color = color;
+    }
+
 }
 
-class Todo{
-    constructor(name, description, project, date) {
-        const today = new Date();
+class Todo {
+    constructor(name, caption, toCompleteDays, projectIndex) {
         this.name = name;
-        this.description = description;
-        if (date) {
-            this.date = date;
-        } else {
-            this.date = {
-                year: today.getFullYear(),
-                month: today.getMonth(),
-                date: today.getDate(),
-                day: today.getDay(),
-            };
-        }
-        project.todoList.push(this);
-        console.log(this);
+        this.caption = caption;
+        this.toCompleteDays = toCompleteDays;
+
+        this.projectIndex = projectIndex;
+        projects[this.projectIndex].todos.push(this);
+    }
+
+    removeSelf() {
+        projects[this.projectIndex].todos.splice(projects[this.projectIndex].todos.indexOf(this), 1)
+    }
+
+    changeName(name) {
+        this.name = name;
+    }
+
+    changeCaption(caption) {
+        this.caption = caption;
+    }
+
+    changeToCompleteDays(toCompleteDays) {
+        this.toCompleteDays = toCompleteDays;
     }
 }
 
-new Todo('game', 'adasdadadas', {
-    "name": "Today",
-    "color": "red",
-    "todoList": []
-}, '')
+const startProject = new Project('Start project', 'Default project for your tasks', 'grey');
+
+const firstTodo = new Todo('First todo', 'Make sure to your mom is happy', 1, projects.indexOf(startProject));
+
 
 function createHtmlElement(tag, id, arrayClasses, content) {
     const element = document.createElement(tag);
@@ -106,8 +80,132 @@ function createHtmlElement(tag, id, arrayClasses, content) {
     return element;
 }
 
-renderHeader();
-renderMain();
-renderFooter();
+// projectInput
+const createProjectInputContainer = createHtmlElement('div', 'create-project-input-container', [], '');
+document.body.appendChild(createProjectInputContainer);
 
-export { createHtmlElement, projects }
+const projectNameInput = createHtmlElement('input', 'project-name-input', ['project-create-input'], '');
+projectNameInput.placeholder = 'Name';
+createProjectInputContainer.appendChild(projectNameInput);
+
+const projectCaptionInput = createHtmlElement('input', 'project-caption-input', ['project-create-input'], '');
+projectCaptionInput.placeholder = 'Caption';
+createProjectInputContainer.appendChild(projectCaptionInput);
+
+const projectColorInput = createHtmlElement('input', 'project-color-input', ['project-create-input'], '');
+projectColorInput.type = 'color';
+createProjectInputContainer.appendChild(projectColorInput);
+
+const sumbitProjectButton = createHtmlElement('button', 'project-sumbit-button', [], 'Sumbit');
+sumbitProjectButton.addEventListener('click', () => {
+    const name = projectNameInput.value;
+    projectNameInput.value = ''
+
+    const caption = projectCaptionInput.value;
+    projectCaptionInput.value = '';
+
+    const color = projectColorInput.value;
+    
+    new Project(name, caption, color);
+    displayProjects();
+    renderOptions();
+    // log
+    console.log(projects);
+})
+createProjectInputContainer.appendChild(sumbitProjectButton);
+// projectInput
+
+
+// projectsDisplay
+const projectsContainer = createHtmlElement('div', 'projects-container', [], '');
+document.body.appendChild(projectsContainer);
+
+function displayProjects() {
+    projectsContainer.innerHTML = '';
+    projects.forEach(project => {
+        const projectCard = createHtmlElement('div', '', ['project-card'], '');
+        projectsContainer.appendChild(projectCard);
+
+        const projectName = createHtmlElement('h3', '', ['project-name'], project.name);
+        projectCard.appendChild(projectName);
+
+        const projectCaption = createHtmlElement('p', '', ['project-caption'], project.caption);
+        projectCard.appendChild(projectCaption);
+        
+        const projectColor = createHtmlElement('span', '', ['project-color'], '');
+        projectColor.style.backgroundColor = project.color;
+        projectCard.appendChild(projectColor);
+
+        const todosContainer = createHtmlElement('div', 'todos-container', [], '');
+        projectCard.appendChild(todosContainer);
+
+        project.todos.forEach(todo => {
+            const todoCard = createHtmlElement('div', '', ['todo-card'], '');
+            todosContainer.appendChild(todoCard);
+
+            const todoName = createHtmlElement('h4', '', ['todo-name'], todo.name);
+            todoCard.appendChild(todoName);
+
+            const todoCaption = createHtmlElement('p', '', ['todo-caption'], todo.caption);
+            todoCard.appendChild(todoCaption);
+
+            const todoDaysToComplete = createHtmlElement('div', '', ['todo-days-to-complete'], todo.toCompleteDays);
+            todoCard.appendChild(todoDaysToComplete);
+        })
+    })
+}
+
+displayProjects();
+// projectsDisplay
+
+
+function renderOptions() {
+    todoProjectSelect.innerHTML = '';
+    projects.forEach(project => {
+        const option = createHtmlElement('option', '', ['project-select-option'], project.name)
+        option.value = `${projects.indexOf(project)}`;
+        todoProjectSelect.appendChild(option);
+    })
+}
+
+//  todoInput
+const createTodoInputContainer = createHtmlElement('div', 'create-todo-input-container', [], '');
+document.body.appendChild(createTodoInputContainer);
+
+const todoNameInput = createHtmlElement('input', 'todo-name-input', ['todo-create-input'], '');
+todoNameInput.placeholder = 'Name';
+createTodoInputContainer.appendChild(todoNameInput);
+
+const todoCaptionInput = createHtmlElement('input', 'todo-caption-input', ['todo-create-input'], '');
+todoCaptionInput.placeholder = 'Caption';
+createTodoInputContainer.appendChild(todoCaptionInput);
+
+const todoToCompleteDaysInput = createHtmlElement('input', 'todo-to-complete-days-input', ['todo-create-input'], '');
+todoToCompleteDaysInput.type = 'Number';
+todoToCompleteDaysInput.placeholder = 'Days to complete';
+createTodoInputContainer.appendChild(todoToCompleteDaysInput);
+
+const todoProjectSelect = createHtmlElement('select', 'todo-projects-input-container', [], '');
+createTodoInputContainer.appendChild(todoProjectSelect);
+
+renderOptions();
+
+const sumbitTodoButton = createHtmlElement('button', 'todo-sumbit-button', [], 'Sumbit');
+sumbitTodoButton.addEventListener('click', () => {
+    const name = todoNameInput.value;
+    todoNameInput.value = '';
+
+    const caption = todoCaptionInput.value;
+    todoCaptionInput.value = ''; 
+
+    const daysToComplete = todoToCompleteDaysInput.value;
+    todoToCompleteDaysInput.value = '';
+
+    const projectIndex = todoProjectSelect.value;
+
+    new Todo(name, caption, daysToComplete, projectIndex);
+    displayProjects();
+})
+createTodoInputContainer.appendChild(sumbitTodoButton);
+
+// todoInput
